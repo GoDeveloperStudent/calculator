@@ -10,7 +10,7 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-func Interfase() {
+func Interfase(InitFunc func()) {
 	a := app.New()
 	w := a.NewWindow("calculator")
 	w.Resize(fyne.NewSize(356, 450))
@@ -21,7 +21,7 @@ func Interfase() {
 	answerRect := canvas.NewRectangle(color.NRGBA{255, 255, 255, 255})
 	answerRect.StrokeColor = color.Black
 	answerRect.StrokeWidth = 1
-	answerRect.Resize(fyne.NewSize(260, 50))
+	answerRect.Resize(fyne.NewSize(250, 50))
 	answerRect.Move(fyne.NewPos(21, 20))
 
 	entry1 := widget.NewMultiLineEntry()
@@ -36,6 +36,12 @@ func Interfase() {
 	entry2.Resize(fyne.NewSize(140, 50))
 	entry2.Move(fyne.NewPos(187, 80))
 
-	w.SetContent(container.NewWithoutLayout(entry2, entry1, answerRect, answer))
+	answerBtn := widget.NewButton("проверить", func() {
+		InitFunc()
+	})
+	answerBtn.Resize(fyne.NewSize(310, 50))
+	answerBtn.Move(fyne.NewPos(20, 150))
+
+	w.SetContent(container.NewWithoutLayout(answerBtn, entry2, entry1, answerRect, answer))
 	w.ShowAndRun()
 }
