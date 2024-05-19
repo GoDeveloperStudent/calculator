@@ -24,6 +24,18 @@ func Interfase() {
 	answerRect.Resize(fyne.NewSize(260, 50))
 	answerRect.Move(fyne.NewPos(21, 20))
 
-	w.SetContent(container.NewWithoutLayout(answerRect, answer))
+	entry1 := widget.NewMultiLineEntry()
+	entry1.Wrapping = fyne.TextWrapOff
+	entry1.SetPlaceHolder("first number")
+	entry1.Resize(fyne.NewSize(140, 50))
+	entry1.Move(fyne.NewPos(20, 80))
+
+	entry2 := widget.NewMultiLineEntry()
+	entry2.Wrapping = fyne.TextWrapOff
+	entry2.SetPlaceHolder("second number")
+	entry2.Resize(fyne.NewSize(140, 50))
+	entry2.Move(fyne.NewPos(187, 80))
+
+	w.SetContent(container.NewWithoutLayout(entry2, entry1, answerRect, answer))
 	w.ShowAndRun()
 }
