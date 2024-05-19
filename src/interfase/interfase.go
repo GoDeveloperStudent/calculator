@@ -13,7 +13,7 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-func Interfase(InitFunc func(num1 float32, num2 float32)) {
+func Interfase(InitFunc func(num1 float32, num2 float32, selected string)) {
 	a := app.New()
 	w := a.NewWindow("calculator")
 	w.Resize(fyne.NewSize(356, 450))
@@ -59,7 +59,7 @@ func Interfase(InitFunc func(num1 float32, num2 float32)) {
 			fmt.Println(err2)
 			answerRect.StrokeColor = color.NRGBA{255, 0, 0, 0}
 		} else {
-			//добавление ответа
+			InitFunc(float32(entry1Fl), float32(entry2Fl), answerRadio.Selected)
 		}
 	})
 	answerBtn.Resize(fyne.NewSize(310, 50))
