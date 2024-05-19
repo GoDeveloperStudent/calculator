@@ -2,6 +2,9 @@ package interfase
 
 import (
 	"image/color"
+	"strconv"
+
+	"fmt"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
@@ -10,7 +13,7 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-func Interfase(InitFunc func()) {
+func Interfase(InitFunc func(num1 float32, num2 float32)) {
 	a := app.New()
 	w := a.NewWindow("calculator")
 	w.Resize(fyne.NewSize(356, 450))
@@ -23,6 +26,14 @@ func Interfase(InitFunc func()) {
 	answerRect.StrokeWidth = 1
 	answerRect.Resize(fyne.NewSize(250, 50))
 	answerRect.Move(fyne.NewPos(21, 20))
+
+	answerRadio := widget.NewRadioGroup([]string{"+", "-", "*", "/"}, func(s string) {})
+
+	accARI := widget.NewAccordionItem("", answerRadio)
+
+	accAR := widget.NewAccordion(accARI)
+	accAR.Resize(fyne.NewSize(310, 50))
+	accAR.Move(fyne.NewPos(20, 220))
 
 	entry1 := widget.NewMultiLineEntry()
 	entry1.Wrapping = fyne.TextWrapOff
@@ -37,11 +48,23 @@ func Interfase(InitFunc func()) {
 	entry2.Move(fyne.NewPos(187, 80))
 
 	answerBtn := widget.NewButton("проверить", func() {
-		InitFunc()
+		entry1Str := entry1.Text
+		entry1Fl, err1 := strconv.ParseFloat(entry1Str, 32)
+
+		entry2Str := entry2.Text
+		entry2Fl, err2 := strconv.ParseFloat(entry2Str, 32)
+		if err1 != nil || err2 != nil {
+			answer.SetText("error")
+			fmt.Println(err1)
+			fmt.Println(err2)
+			answerRect.StrokeColor = color.NRGBA{255, 0, 0, 0}
+		} else {
+			//добавление ответа
+		}
 	})
 	answerBtn.Resize(fyne.NewSize(310, 50))
 	answerBtn.Move(fyne.NewPos(20, 150))
 
-	w.SetContent(container.NewWithoutLayout(answerBtn, entry2, entry1, answerRect, answer))
+	w.SetContent(container.NewWithoutLayout(accAR, answerBtn, entry2, entry1, answerRect, answer))
 	w.ShowAndRun()
 }
