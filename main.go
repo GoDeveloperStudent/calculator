@@ -1,9 +1,9 @@
 package main
 
 import (
-	"GoMod/src/interfase"
+	"GoMod/src/gui"
 )
 
 func main() {
-	interfase.Interfase() //вход-выход функции
+	gui.Gui() //вход-выход функции
 }
