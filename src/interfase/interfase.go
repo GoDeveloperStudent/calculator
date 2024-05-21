@@ -1,6 +1,7 @@
 package interfase
 
 import (
+	"GoMod/src/initfunc"
 	"image/color"
 	"strconv"
 
@@ -13,7 +14,7 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-func Interfase(InitFunc func(num1 float32, num2 float32, selected string)) {
+func Interfase() {
 	a := app.New()
 	w := a.NewWindow("calculator")
 	w.Resize(fyne.NewSize(356, 450))
@@ -57,9 +58,9 @@ func Interfase(InitFunc func(num1 float32, num2 float32, selected string)) {
 			answer.SetText("error")
 			fmt.Println(err1)
 			fmt.Println(err2)
-			answerRect.StrokeColor = color.NRGBA{255, 0, 0, 0}
+			answerRect.StrokeColor = color.NRGBA{255, 0, 0, 255}
 		} else {
-			InitFunc(float32(entry1Fl), float32(entry2Fl), answerRadio.Selected)
+			answer.SetText(initfunc.Initfunc(float32(entry1Fl), float32(entry2Fl), answerRadio.Selected))
 		}
 	})
 	answerBtn.Resize(fyne.NewSize(310, 50))
