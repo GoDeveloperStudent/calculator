@@ -18,6 +18,8 @@ func Gui() {
 	a := app.New()
 	w := a.NewWindow("calculator")
 	w.Resize(fyne.NewSize(356, 450))
+	ico, _ := fyne.LoadResourceFromPath("icon.ico")
+	w.SetIcon(ico)
 
 	answer := widget.NewLabel("ответ")
 	answer.Move(fyne.NewPos(20, 20))
@@ -25,7 +27,7 @@ func Gui() {
 	answerRect := canvas.NewRectangle(color.NRGBA{255, 255, 255, 255})
 	answerRect.StrokeColor = color.Black
 	answerRect.StrokeWidth = 1
-	answerRect.Resize(fyne.NewSize(250, 50))
+	answerRect.Resize(fyne.NewSize(233, 50))
 	answerRect.Move(fyne.NewPos(21, 20))
 
 	operationsList := widget.NewRadioGroup([]string{"+", "-", "*", "/"}, func(s string) {}) //radio group
