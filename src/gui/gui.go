@@ -50,12 +50,21 @@ func Gui() {
 	userInputRight.Resize(fyne.NewSize(140, 50))
 	userInputRight.Move(fyne.NewPos(187, 80))
 
+	var err string
+	errCard := widget.NewCard("error", err, widget.NewLabel(""))
 	answerBtn := widget.NewButton("проверить", func() {
 		userInputleftStr := userInputleft.Text
 		userInputleftFl, err1 := strconv.ParseFloat(userInputleftStr, 32)
 
 		userInputRightStr := userInputRight.Text
 		userInputRightFl, err2 := strconv.ParseFloat(userInputRightStr, 32)
+
+		if err1 != nil {
+			err = err1.Error()
+		} else if err2 != nil {
+			err = err2.Error()
+		}
+
 		if err1 != nil || err2 != nil {
 			answer.SetText("error")
 			fmt.Println(err1)
@@ -63,11 +72,20 @@ func Gui() {
 			answerRect.StrokeColor = color.NRGBA{255, 0, 0, 255}
 		} else {
 			answer.SetText(initfunc.Initfunc(float32(userInputleftFl), float32(userInputRightFl), operationsList.Selected))
+			answerRect.StrokeColor = color.Black
 		}
+
+		errCard.SetContent(widget.NewCard("error", err, widget.NewLabel("")))
+
 	})
 	answerBtn.Resize(fyne.NewSize(310, 50))
 	answerBtn.Move(fyne.NewPos(20, 150))
 
-	w.SetContent(container.NewWithoutLayout(list, answerBtn, userInputRight, userInputleft, answerRect, answer))
+	tabs := container.NewAppTabs(
+		container.NewTabItem("calc", container.NewWithoutLayout(list, answerBtn, userInputRight, userInputleft, answerRect, answer)),
+		container.NewTabItem("errors", errCard),
+	)
+
+	w.SetContent(tabs)
 	w.ShowAndRun()
 }
