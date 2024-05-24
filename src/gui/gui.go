@@ -75,7 +75,12 @@ func Gui() {
 			answerRect.StrokeColor = color.Black
 		}
 
-		errCard.SetContent(widget.NewCard("error", err, widget.NewLabel("")))
+		errVar := fmt.Sprintf("%s%s", err1, err2)
+
+		errVarLabel := widget.NewLabel(errVar)
+		errVarLabel.Wrapping = fyne.TextWrapBreak
+
+		errCard.SetContent(widget.NewCard("error", "errors of mathematical operations", errVarLabel))
 
 	})
 	answerBtn.Resize(fyne.NewSize(310, 50))
